@@ -6,7 +6,7 @@ import { gql, GraphQLClient } from 'graphql-request'
 /**
  * Configuration
  */
-const DEBUG = false;
+const DEBUG = true;
 const specialCases = {
     "627e14b21713922ded6f2c15": 250000,
     "634959225289190e5e773b3b": 15000
@@ -56,7 +56,7 @@ const main = (async () => {
             errorPolicy: "ignore"
         });
         
-        const tarkovDevPrices = await graphQLClient.request(pvpQuery);
+        const tarkovDevPrices = await graphQLClient.request(pveQuery);
         fs.writeFileSync(tarkovdevPVEprices, JSON.stringify(tarkovDevPrices, null, 4));
 
         // Fetch the latest prices.json and handbook.json from SPT-AKI's git repo
