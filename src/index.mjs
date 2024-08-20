@@ -6,7 +6,7 @@ import { gql, GraphQLClient } from 'graphql-request'
 /**
  * Configuration
  */
-const DEBUG = true;
+const DEBUG = false;
 const specialCases = {
     "627e14b21713922ded6f2c15": 250000,
     "634959225289190e5e773b3b": 15000
