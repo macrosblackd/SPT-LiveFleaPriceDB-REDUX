@@ -26,6 +26,6 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           default_author: github_actions
-          add: 'prices.json'
+          add: 'prices-pve.json'
           message: 'Update prices'
           
