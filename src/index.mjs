@@ -12,9 +12,9 @@ const specialCases = {
     "634959225289190e5e773b3b": 15000
 };
 
-const query = gql`
+const pvpQuery = gql`
 {
-    items(lang: en) {
+    items(lang: en, gameMode: regular) {
         id
         name
         avg24hPrice
@@ -27,6 +27,26 @@ const query = gql`
 }
 `
 
+const pveQuery = gql`
+{
+    items(lang: en, gameMode: pve) {
+        id
+        name
+        avg24hPrice
+        changeLast48hPercent
+        historicalPrices {
+            price
+            timestamp
+        }
+    }
+}
+`
+
+const tarkovdevPVPprices = 'tarkovdevprices-pvp.json'
+const tarkovdevPVEprices = 'tarkovdevprices-pve.json'
+const pvpPricesName = 'prices-pvp.json'
+const pvePricesName = 'prices-pve.json'
+
 const main = (async () => {
     // Fetch data
     if (!DEBUG)
@@ -36,8 +56,8 @@ const main = (async () => {
             errorPolicy: "ignore"
         });
         
-        const tarkovDevPrices = await graphQLClient.request(query);
-        fs.writeFileSync('tarkovdevprices.json', JSON.stringify(tarkovDevPrices, null, 4));
+        const tarkovDevPrices = await graphQLClient.request(pvpQuery);
+        fs.writeFileSync(tarkovdevPVEprices, JSON.stringify(tarkovDevPrices, null, 4));
 
         // Fetch the latest prices.json and handbook.json from SPT-AKI's git repo
         await downloadFile('https://dev.sp-tarkov.com/SPT-AKI/Server/raw/branch/master/project/assets/database/templates/handbook.json', 'akihandbook.json');
@@ -45,12 +65,12 @@ const main = (async () => {
         await downloadFile('https://dev.sp-tarkov.com/SPT-AKI/Server/raw/branch/master/project/assets/database/templates/prices.json', 'akiprices.json');
     }
 
-    processData();
+    processData(tarkovdevPVEprices, pvePricesName);
 });
 
-const processData = (() => {
+const processData = ((apiPrices, outFileName) => {
     // Read in data
-    const tarkovDevPrices = JSON.parse(fs.readFileSync('tarkovdevprices.json', 'utf-8'));
+    const tarkovDevPrices = JSON.parse(fs.readFileSync(apiPrices, 'utf-8'));
     const akiHandbook = JSON.parse(fs.readFileSync('akihandbook.json', 'utf-8'));
     const akiItems = JSON.parse(fs.readFileSync('akiitems.json', 'utf-8'));
     const akiPrices = JSON.parse(fs.readFileSync('akiprices.json', 'utf-8'));
@@ -110,7 +130,7 @@ const processData = (() => {
     }
 
     // Write out the updated price data
-    fs.writeFileSync('prices.json', JSON.stringify(priceList, null, 4));
+    fs.writeFileSync(outFileName, JSON.stringify(priceList, null, 4));
 });
 
 const processTarkovDevPrices = ((tarkovDevPrices) => {

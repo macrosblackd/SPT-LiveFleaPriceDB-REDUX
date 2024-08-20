@@ -1,21 +1,21 @@
 {
-  "name": "spt-livefleapricedb",
-  "version": "1.0.0",
-  "description": "SPT live flea price DB updater",
+  "name": "spt-livefleapricedb-redux",
+  "version": "2.0.0",
+  "description": "SPT live flea price DB updater for pvp and pve modes",
   "main": "src/index.mjs",
   "scripts": {
     "fetch": "node src/index.mjs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DrakiaXYZ/SPT-LiveFleaPriceDB.git"
+    "url": "git+https://github.com/macrosblackd/SPT-LiveFleaPriceDB-REDUX.git"
   },
-  "author": "DrakiaXYZ",
+  "author": "macrosblackd",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/DrakiaXYZ/SPT-LiveFleaPriceDB/issues"
+    "url": "https://github.com/macrosblackd/SPT-LiveFleaPriceDB-REDUX/issues"
   },
-  "homepage": "https://github.com/DrakiaXYZ/SPT-LiveFleaPriceDB#readme",
+  "homepage": "https://github.com/macrosblackd/SPT-LiveFleaPriceDB-REDUX#readme",
   "dependencies": {
     "graphql-request": "^6.1.0"
   }
